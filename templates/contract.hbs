@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #4a4a4a;
+            /* 🔥 main soft gray */
+            -webkit-print-color-adjust: exact;
+        }
+
+        .page {
+            width: 794px;
+            height: 1123px;
+            background-image: url('{{bg}}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            page-break-after: always;
+            box-sizing: border-box;
+            padding: 50px 70px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 180px;
+        }
+
+        .logo {
+            width: 260px;
+            object-fit: contain;
+        }
+
+        .header-right {
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 260px;
+            line-height: 1.5;
+            color: #6a6a6a;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: #6a6a6a;
+            /* 🔥 same premium gray */
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .header-items {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: underline;
+            margin: 15px 0 40px;
+            text-underline-offset: 4px;
+            color: #2f2f2f;
+            /* darker for heading */
+        }
+
+        .section {
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #5a5a5a;
+        }
+
+        .section b {
+            color: #2f2f2f;
+            /* 🔥 headings darker */
+            font-weight: 600;
+        }
+
+        /* FAQ */
+
+        .faq-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2f2f2f;
+            margin-bottom: 8px;
+        }
+
+        .faq-item {
+            margin-bottom: 4px;
+        }
+
+        .question {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 1px;
+        }
+
+        .answer {
+            font-size: 12px;
+            color: #6a6a6a;
+            line-height: 1.5;
+        }
+
+        /* TERMS */
+
+        .terms-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2f2f2f;
+            margin-bottom: 6px;
+        }
+
+        .terms-group {
+            margin-bottom: 6px;
+        }
+
+        .terms-heading {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 2px;
+        }
+
+        .terms ul {
+            margin: 0;
+            padding-left: 14px;
+        }
+
+        .terms li {
+            font-size: 12px;
+            margin-bottom: 2px;
+            color: #6a6a6a;
+            line-height: 1.5;
+        }
+
+        .signature {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= PAGE 1 ================= -->
+    <div class="page">
+
+        <div class="header">
+            <img src="{{logo}}" class="logo" />
+
+            <div class="header-right">
+
+                <div class="header-items">
+                    <!-- Email Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                    innovate.a2z@gmail.com
+                </div>
+
+                <div class="header-items">
+                    <!-- Location Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                    </svg>
+                    Innovate Wedding Company, Beach Road Junction, Pattahasalianvilai road
+                </div>
+
+                <div class="header-items">
+                    <!-- Phone Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 
+                1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.07 
+                21 3 13.93 3 5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 
+                0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <div>
+                        +91 9361035209 <br />
+                        +91 9500784748
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="title">Letter of Contract</div>
+
+        <div class="section">
+            This contract is entered into on this date {{date}} by and between:
+            Innovate Wedding Company, Beach Road Junction, Pattahasalianvilai road.
+        </div>
+
+        <div class="section">
+            <b>Client Details:</b><br />
+            Name : {{client.name}}<br />
+            Address : {{client.address}}<br />
+            Mobile number: {{client.mobile}}<br />
+            Email : {{client.email}}
+        </div>
+
+        <div class="section">
+            <b>Event Details:</b><br />
+            Bridegroom / Bride Name : {{event.couple}}<br />
+            Event : {{event.name}}<br />
+            Date : {{event.formattedDate}} ({{event.timeRange}})<br />
+            Venue : {{event.venue}}
+        </div>
+
+        <div class="section">
+            <b>Photography Package Details:</b><br />
+            Package : {{package.name}}<br />
+            Total Amount : Rs. {{package.total}}<br />
+            Advance Paid : Rs. {{package.advance}}<br />
+            No. of sessions: {{sessions.length}}
+        </div>
+
+        {{#each firstPageSessions}}
+        <div class="section">
+            <b>Session {{inc @index}} :</b> {{title}}<br />
+            <b>Team:</b><br />
+            {{#each team}}
+            ◦ {{this}}<br />
+            {{/each}}
+        </div>
+        {{/each}}
+
+    </div>
+
+
+    <!-- ================= SESSION PAGES ================= -->
+    {{#each remainingSessionChunks}}
+    <div class="page">
+
+        <div class="header">
+            <img src="{{logo}}" class="logo" />
+
+            <div class="header-right">
+
+                <div class="header-items">
+                    <!-- Email Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                    innovate.a2z@gmail.com
+                </div>
+
+                <div class="header-items">
+                    <!-- Location Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                    </svg>
+                    Innovate Wedding Company, Beach Road Junction, Pattahasalianvilai road
+                </div>
+
+                <div class="header-items">
+                    <!-- Phone Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 
+                1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.07 
+                21 3 13.93 3 5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 
+                0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <div>
+                        +91 9361035209 <br />
+                        +91 9500784748
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{#each sessions}}
+        <div class="section">
+            <b>Session {{sessionNumber @index ../startIndex}} :</b> {{title}}<br />
+            <b>Team:</b><br />
+            {{#each team}}
+            ◦ {{this}}<br />
+            {{/each}}
+        </div>
+        {{/each}}
+
+    </div>
+    {{/each}}
+
+
+    <!-- ================= FAQ + T&C PAGE ================= -->
+    <div class="page">
+
+        <div class="header">
+            <img src="{{logo}}" class="logo" />
+
+            <div class="header-right">
+
+                <div class="header-items">
+                    <!-- Email Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                    innovate.a2z@gmail.com
+                </div>
+
+                <div class="header-items">
+                    <!-- Location Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                    </svg>
+                    Innovate Wedding Company, Beach Road Junction, Pattahasalianvilai road
+                </div>
+
+                <div class="header-items">
+                    <!-- Phone Icon -->
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 
+                1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.07 
+                21 3 13.93 3 5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 
+                0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <div>
+                        +91 9361035209 <br />
+                        +91 9500784748
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section faq">
+
+            <div class="faq-title">FAQ’s:</div>
+
+            <div class="faq-item">
+                <div class="question">
+                    How many photos can be accommodated in 45 sheets (90 pages album)?
+                </div>
+                <div class="answer">
+                    You will be provided with softcopies of both candid and traditional photos. Max of 235 photos can
+                    be placed in Album.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="question">
+                    How about the album pattern?
+                </div>
+                <div class="answer">
+                    Regular Album is of 12”x30” size. In a 45-sheet album, 10 creative sheets will be designed
+                    (Creative/Special shots from wedding and outdoor). Remaining sheets will be accommodated with your
+                    selected traditional photos plus best candid shots selected by us.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="question">
+                    What is the time frame for delivering album?
+                </div>
+                <div class="answer">
+                    Photo selection for album is to be completed in a week by client. It takes 45 days for delivering
+                    the
+                    Photo Album. Delay in photo selection would delay Album delivery. Clients can share the required
+                    corrections during Album proofing, listing-out all needed changes in a single-pass will save time
+                    for both of us.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- T&C -->
+        <div class="section terms">
+
+            <div class="terms-title">Terms And Conditions:</div>
+
+            <div class="terms-group">
+                <div class="terms-heading">Payment Terms:</div>
+                <ul>
+                    <li>“Letter Of Contract”, to be signed as per agreement terms</li>
+                    <li>40% Advance, to confirm booking (Out of which 15K is non-refundable in case of change of Event
+                        date or Event Cancellation)</li>
+                    <li>50% balance, a couple of days prior (or) on the date of the Event</li>
+                    <li>10% balance, after Album proofing</li>
+                    <li>After 90% payment, Event’s complete soft copy is provided</li>
+                </ul>
+            </div>
+
+            <div class="terms-group">
+                <div class="terms-heading">Events:</div>
+                <ul>
+                    <li>Post-wedding shoot (if opted) should be done within 45 days from wedding</li>
+                    <li>Additional Photo / Videography sessions are chargeable</li>
+                    <li>Travel, Food and Stay, to be provided by the clients</li>
+                    <li>Accommodation to be provided in good hotels (3 members per room)</li>
+                    <li>If the event extends beyond the scheduled timings, every extra hour of shoot is charged at
+                        Rs.10000</li>
+                </ul>
+            </div>
+
+            <div class="terms-group">
+                <div class="terms-heading">Album delivery:</div>
+                <ul>
+                    <li>Color-corrected photos will be provided to clients in a week’s time (after event), for Album
+                        Photo selection</li>
+                    <li>Photo selection for album to be done within a week by the clients</li>
+                    <li>Album delivered in 45 days, after Photo selection and Outdoor shoot</li>
+                    <li>In case of Photo selection delay, 45-day delivery time does not apply</li>
+                    <li>Album proofing is done by clients once, and chargeable thereafter</li>
+                    <li>Final payment to be done after Album proofing</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="signature">
+            <div>(Client’s Signature)</div>
+            <div>(Innovate Wedding Company)</div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
