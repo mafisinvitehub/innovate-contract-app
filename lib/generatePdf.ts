@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 import fs from "fs";
 import path from "path";
 import Handlebars from "handlebars";
@@ -17,78 +18,92 @@ Handlebars.registerHelper("sessionNumber", function (index, base) {
     return base + index + 1;
 });
 
-export async function generatePdf(data: any) {
-    const templatePath = path.join(process.cwd(), "templates", "contract.hbs");
+// 🔥 ENV CHECK
+const isLocal = process.env.NODE_ENV !== "production";
 
-    // ✅ Read template
-    const htmlTemplate = fs.readFileSync(templatePath, "utf-8");
+// 🔥 BROWSER LAUNCH FUNCTION
+async function launchBrowser() {
+    if (isLocal) {
+        const puppeteerFull = await import("puppeteer");
 
-    // ✅ Convert team string → array
-    const formattedSessions = data.sessions.map((s: any) => ({
-        ...s,
-        team: s.team
-            ? s.team.split("\n").map((t: string) => t.trim()).filter(Boolean)
-            : [],
-    }));
-
-    // ✅ Compile template
-    const compiled = Handlebars.compile(htmlTemplate);
-
-    // ✅ Get base64 images
-    const bg = getBase64Image("contract-bg.jpeg");
-    const logo = getBase64Image("logo.png");
-
-    /* =====================================================
-       🔥 PAGINATION LOGIC (IMPORTANT FIX)
-    ===================================================== */
-
-    const firstPageLimit = 1;
-
-    const firstPageSessions = formattedSessions.slice(0, firstPageLimit);
-
-    const remainingSessions = formattedSessions.slice(firstPageLimit);
-
-    const chunkSize = 3;
-
-    const remainingSessionChunks = [];
-
-    for (let i = 0; i < remainingSessions.length; i += chunkSize) {
-        remainingSessionChunks.push({
-            sessions: remainingSessions.slice(i, i + chunkSize),
-            startIndex: firstPageLimit + i, // ✅ IMPORTANT
+        return puppeteerFull.default.launch({
+            headless: true,
         });
     }
 
-    /* ===================================================== */
-
-    // ✅ Inject data into template
-    const finalHtml = compiled({
-        ...data,
-        firstPageSessions,
-        remainingSessionChunks,
-        bg,
-        logo,
-    });
-
-    // 🚀 Launch browser
-    const browser = await puppeteer.launch({
+    return puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
         headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+}
 
-    const page = await browser.newPage();
+export async function generatePdf(data: any) {
+    try {
+        const templatePath = path.join(process.cwd(), "templates", "contract.hbs");
 
-    await page.setContent(finalHtml, {
-        waitUntil: "domcontentloaded",
-        timeout: 0,
-    });
+        // ✅ Read template
+        const htmlTemplate = fs.readFileSync(templatePath, "utf-8");
 
-    const pdf = await page.pdf({
-        format: "A4",
-        printBackground: true,
-    });
+        // ✅ Convert team string → array
+        const formattedSessions = data.sessions.map((s: any) => ({
+            ...s,
+            team: s.team
+                ? s.team.split("\n").map((t: string) => t.trim()).filter(Boolean)
+                : [],
+        }));
 
-    await browser.close();
+        // ✅ Compile template
+        const compiled = Handlebars.compile(htmlTemplate);
 
-    return pdf;
+        // ✅ Images
+        const bg = getBase64Image("contract-bg.jpeg");
+        const logo = getBase64Image("logo.png");
+
+        // 🔥 Pagination
+        const firstPageLimit = 1;
+        const firstPageSessions = formattedSessions.slice(0, firstPageLimit);
+        const remainingSessions = formattedSessions.slice(firstPageLimit);
+
+        const chunkSize = 3;
+        const remainingSessionChunks = [];
+
+        for (let i = 0; i < remainingSessions.length; i += chunkSize) {
+            remainingSessionChunks.push({
+                sessions: remainingSessions.slice(i, i + chunkSize),
+                startIndex: firstPageLimit + i,
+            });
+        }
+
+        // ✅ Final HTML
+        const finalHtml = compiled({
+            ...data,
+            firstPageSessions,
+            remainingSessionChunks,
+            bg,
+            logo,
+        });
+
+        // 🚀 Launch browser (🔥 FIXED)
+        const browser = await launchBrowser();
+
+        const page = await browser.newPage();
+
+        await page.setContent(finalHtml, {
+            waitUntil: "networkidle0",
+        });
+
+        const pdf = await page.pdf({
+            format: "A4",
+            printBackground: true,
+        });
+
+        await browser.close();
+
+        return pdf;
+
+    } catch (error) {
+        console.error("PDF ERROR:", error);
+        throw error;
+    }
 }
