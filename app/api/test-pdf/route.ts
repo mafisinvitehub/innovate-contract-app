@@ -28,11 +28,18 @@ export async function POST(req: NextRequest) {
 
     const pdf = await generatePdf(data);
 
-    // 🔥 FIX HERE
+    // ✅ filename logic
+    const safeName = body?.client?.name
+        ? body.client.name.replace(/[^a-z0-9]/gi, "_").toLowerCase()
+        : null;
+
+    const fileName = safeName ? `${safeName}.pdf` : "contract.pdf";
+
+    // 🔥 response
     return new NextResponse(pdf.buffer as ArrayBuffer, {
         headers: {
             "Content-Type": "application/pdf",
-            "Content-Disposition": "attachment; filename=contract.pdf",
+            "Content-Disposition": `attachment; filename="${fileName}"`,
         },
-    });
+    });;
 }

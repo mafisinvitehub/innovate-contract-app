@@ -31,6 +31,7 @@ export default function ContractForm() {
         },
         sessions: [] as SessionType[],
     });
+    const [loading, setLoading] = useState(false);
 
     /* ---------------- SESSION LOGIC ---------------- */
 
@@ -69,26 +70,47 @@ export default function ContractForm() {
     /* ---------------- SUBMIT ---------------- */
 
     const handleSubmit = async () => {
-        const res = await fetch("/api/test-pdf", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(form),
-        });
+        try {
+            setLoading(true);
 
-        if (!res.ok) {
-            alert("PDF generation failed");
-            return;
+            const res = await fetch("/api/test-pdf", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(form),
+            });
+
+            if (!res.ok) {
+                alert("PDF generation failed");
+                return;
+            }
+
+            // ✅ get filename from header
+            const disposition = res.headers.get("content-disposition");
+
+            let fileName = "contract.pdf";
+
+            if (disposition && disposition.includes("filename=")) {
+                fileName = disposition
+                    .split("filename=")[1]
+                    .replace(/"/g, "");
+            }
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = fileName; // 🔥 dynamic filename
+            a.click();
+
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        } finally {
+            setLoading(false);
         }
-
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "contract.pdf";
-        a.click();
     };
 
     /* ---------------- UI ---------------- */
@@ -141,11 +163,11 @@ export default function ContractForm() {
                                 onChange={(v) => updateSession(s.id, "title", v)}
                             />
 
-                            <Input
+                            {/* <Input
                                 type="time"
                                 label="Time"
                                 onChange={(v) => updateSession(s.id, "time", v)}
-                            />
+                            /> */}
 
                             {/* TEAM BULLET EDITOR */}
                             <div>
@@ -183,9 +205,18 @@ Videographer`}
                 {/* SUBMIT */}
                 <button
                     onClick={handleSubmit}
-                    className="w-full bg-black text-white py-3 rounded-lg font-semibold"
+                    disabled={loading}
+                    className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300
+        ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-black text-white cursor-pointer"}`}
                 >
-                    Generate PDF
+                    {loading ? (
+                        <>
+                            <Spinner />
+                            Generating PDF
+                        </>
+                    ) : (
+                        "Generate PDF"
+                    )}
                 </button>
 
             </div>
@@ -222,5 +253,11 @@ function Input({
                 onChange={(e) => onChange(e.target.value)}
             />
         </div>
+    );
+}
+
+function Spinner() {
+    return (
+        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
     );
 }
