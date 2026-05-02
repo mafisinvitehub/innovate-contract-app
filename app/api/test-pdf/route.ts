@@ -19,13 +19,15 @@ export async function POST(req: NextRequest) {
         ...body,
         event: {
             ...body.event,
-            formattedDate: formatDate(body.event.date), // ✅ NEW
+            formattedDate: formatDate(body.event.date),
         },
         date: new Date().toLocaleDateString("en-GB"),
     };
+
     const pdf = await generatePdf(data);
 
-    return new NextResponse(pdf, {
+    // 🔥 FIX HERE
+    return new NextResponse(pdf.buffer as ArrayBuffer, {
         headers: {
             "Content-Type": "application/pdf",
             "Content-Disposition": "attachment; filename=contract.pdf",
