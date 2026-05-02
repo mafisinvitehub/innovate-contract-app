@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generatePdf } from "@/lib/generatePdf";
 
+export const runtime = "nodejs";
+
 export async function POST(req: NextRequest) {
 
     function formatDate(dateStr: string) {
