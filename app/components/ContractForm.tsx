@@ -28,6 +28,7 @@ export default function ContractForm() {
             name: "",
             total: "",
             advance: "",
+            sheets: "",
         },
         sessions: [] as SessionType[],
     });
@@ -73,12 +74,21 @@ export default function ContractForm() {
         try {
             setLoading(true);
 
+            const sheetsCount = Number(form.package.sheets) || 0;
+            const payload = {
+                ...form,
+                package: {
+                    ...form.package,
+                    pages: sheetsCount * 2,
+                },
+            };
+
             const res = await fetch("/api/test-pdf", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(form),
+                body: JSON.stringify(payload),
             });
 
             if (!res.ok) {
@@ -149,6 +159,7 @@ export default function ContractForm() {
                     <Input label="Package Name" onChange={(v) => setForm({ ...form, package: { ...form.package, name: v } })} />
                     <Input label="Total" onChange={(v) => setForm({ ...form, package: { ...form.package, total: v } })} />
                     <Input label="Advance" onChange={(v) => setForm({ ...form, package: { ...form.package, advance: v } })} />
+                    <Input label="Sheets" onChange={(v) => setForm({ ...form, package: { ...form.package, sheets: v } })} />
                 </Section>
 
                 {/* SESSIONS */}
